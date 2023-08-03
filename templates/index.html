@@ -1,0 +1,43 @@
+<!-- Here we use bootstrap extension for our navigation Bar -->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block title %} {% endblock %}
+    {% block style %}
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    {% endblock %}
+    <!-- Bootstrap CSS -->
+
+</head>
+<body>
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
+  <div class="container-fluid py-0">
+    <a class="navbar-brand py-0" href="/">
+        <img src='/static/media/favicon.png' alt="" width="236" height="75" class="d-inline-block align-text-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link {% if page and page == "Search-multi" %}active{% endif %}" {% if page and page == "Search-multi" %}aria-current="page"{% endif %} href="/search-multi">Find relevant documents</a>
+        <a class="nav-link {% if page and page == "Search-single" %}active{% endif %}" {% if page and page == "Search-single" %}aria-current="page"{% endif %} href="/search-single">Analyze documents</a>
+          <a class="nav-link {% if page and page == "Upload" %}active{% endif %}" {% if page and page == "Upload" %}aria-current="page"{% endif %} href="/upload-page">upload files</a>
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+{% block content %}
+{% block javascript %}{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+{% endblock %}
+</body>
+</html>

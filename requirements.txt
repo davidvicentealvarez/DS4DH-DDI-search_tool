@@ -1,0 +1,11 @@
+PyPDF2
+Elasticsearch
+tqdm
+pandas
+docx2txt
+flask
+werkzeug
+dominate
+flask_nav
+openpyxl
+gunicorn

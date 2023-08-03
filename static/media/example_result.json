@@ -1,0 +1,93 @@
+{
+  "..\\drive\\Questionnaires\\Cyprus\\Census2011.pdf": {
+    "disabilities": {
+      "hearing": [
+        {
+          "chunk_number": 0,
+          "chunk_id": "uf-264QBAgU2PmsGWN3i",
+          "texts": "and have not been listed above?  Yes…    No……  1(c) ",
+          "wg_wording": "1",
+          "wg_scale": "0"
+        }
+      ]
+    },
+    "dataset_name": "test 1",
+    "dataset_years": "2023",
+    "dataset_reviewer": "david"
+  },
+  "..\\drive\\Questionnaires\\Cyprus\\EUROPEAN_HEALTH_SURVEY-2019.pdf": {
+    "disabilities": {
+      "walking": [
+        {
+          "chunk_number": 0,
+          "chunk_id": "tP-264QBAgU2PmsGY95r",
+          "texts": " a health care institution  C30  In the past 12 months, have you experienced delay in getting health care, because ………? No, I didn't face  any delayNo need for  health care 2 3 2 3No, I didn't face  any delayNo need for  health care 2 3 2 3",
+          "wg_wording": "0",
+          "wg_scale": "-1"
+        },
+        {
+          "chunk_number": 3,
+          "chunk_id": "n_-264QBAgU2PmsGY95r",
+          "texts": " - 18 - Personal care PC1 P Member 1: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 2: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 3: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9ACTIVITYInterviewer, for question PC1 please hand SHOWCARD 4 with the activities under study and the answer categories  Any temporary problems should not be taken into account  A lot of difficultyDon't know/ not sure/ don't remember 4 8 4 8 4 8 4 88 8 44 8 4 4 8 8No difficutly Some difficulty A lot of difficultyCannot do at all/ Unable to doDon't know/ not sure/ don't rememberRefusal 4 8 4 8 4 8 Cannot do at all/ Unable to do 4Refusal ACTIVITY No difficutly Some difficultyFOR PERSONS AGED 15 AND OVER 4 8Some difficulty No difficutly ACTIVITYB20  Do you usually have difficulty doing any of these activities without help? Refusal 4 8Don't know/ not sure/ don't rememberCannot do at all/ Unable to doA lot of difficulty 4 8",
+          "wg_wording": "0",
+          "wg_scale": "-1"
+        }
+      ],
+      "communication": [
+        {
+          "chunk_number": 2,
+          "chunk_id": "nv-264QBAgU2PmsGY95r",
+          "texts": "daaa",
+          "wg_wording": "1",
+          "wg_scale": "0"
+        },
+        {
+          "chunk_number": 3,
+          "chunk_id": "n_-264QBAgU2PmsGY95r",
+          "texts": "as",
+          "wg_wording": "1",
+          "wg_scale": "1"
+        }
+      ],
+      "self-care": [
+        {
+          "chunk_number": 3,
+          "chunk_id": "n_-264QBAgU2PmsGY95r",
+          "texts": " - 18 - Personal care PC1 P Member 1: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 2: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 3: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9ACTIVITYInterviewer, for question PC1 please hand SHOWCARD 4 with the activities under study and the answer categories  Any temporary problems should not be taken i",
+          "wg_wording": "0",
+          "wg_scale": "-1"
+        }
+      ],
+      "cognition": [
+        {
+          "chunk_number": 3,
+          "chunk_id": "n_-264QBAgU2PmsGY95r",
+          "texts": " - 18 - Personal care PC1 P Member 1: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 2: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 3: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9ACTIVITYInterviewer, for question PC1 please hand SHOWCARD 4 with the activities under study and the answer categories  Any temporary problems should not be taken into account  A lot of difficultyDon't know/ not sure/ don't remember 4 8 4 8 4 8 4 88 8 44 8 4 4 8 8No difficutly Some difficulty A lot of difficultyCannot do at all/ Unable to doDon't know/ not sure/ don't rememberRefusal 4 8 4 8 4 8 Cannot do at all/ Unable to do 4Refusal ACTIVITY No difficutly Some difficultyFOR PERSONS AGED 15 AND OVER 4 8Some difficulty No difficutly ACTIVITYB20  Do you usually have difficulty doing any of these activities without help? Refusal 4 8Don't know/ not sure/ don't rememberCannot do at all/ Unable to doA lot of difficulty 4 8",
+          "wg_wording": "0",
+          "wg_scale": "-1"
+        }
+      ],
+      "seeing": [
+        {
+          "chunk_number": 3,
+          "chunk_id": "n_-264QBAgU2PmsGY95r",
+          "texts": " - 18 - Personal care PC1 P Member 1: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 2: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 3: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9ACTIVITYInterviewer, for question PC1 please hand SHOWCARD 4 with the activities under study and the answer categories  Any temporary problems should not be taken into account  A lot of difficultyDon't know/ not sure/ don't remember 4 8 4 8 4 8 4 88 8 44 8 4 4 8 8No difficutly Some difficulty A lot of difficultyCannot do at all/ Unable to doDon't know/ not sure/ don't rememberRefusal 4 8 4 8 4 8 Cannot do at all/ Unable to do 4Refusal ACTIVITY No difficutly Some difficultyFOR PERSONS AGED 15 AND OVER 4 8Some difficulty No difficutly ACTIVITYB20  Do you usually have difficulty doing any of these activities without help? Refusal 4 8Don't know/ not sure/ don't rememberCannot do at all/ Unable to doA lot of difficulty 4 8",
+          "wg_wording": "0",
+          "wg_scale": "-1"
+        }
+      ],
+      "hearing": [
+        {
+          "chunk_number": 3,
+          "chunk_id": "n_-264QBAgU2PmsGY95r",
+          "texts": " - 18 - Personal care PC1 P Member 1: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 2: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9 Member 3: A  Feeding yourself? 1 2 3 9 B  Getting in and out of a bed or chair? 1 2 3 9 C  Dressing and undressing? 1 2 3 9 D  Using toilet? 1 2 3 9 E  Bathing or showering? 1 2 3 9ACTIVITYInterviewer, for question PC1 please hand SHOWCARD 4 with the activities under study and the answer categories  Any temporary problems should not be taken into account  A lot of difficultyDon't know/ not sure/ don't remember 4 8 4 8 4 8 4 88 8 44 8 4 4 8 8No difficutly Some difficulty A lot of difficultyCannot do at all/ Unable to doDon't know/ not sure/ don't rememberRefusal 4 8 4 8 4 8 Cannot do at all/ Unable to do 4Refusal ACTIVITY No difficutly Some difficultyFOR PERSONS AGED 15 AND OVER 4 8Some difficulty No difficutly ACTIVITYB20  Do you usually have difficulty doing any of these activities without help? Refusal 4 8Don't know/ not sure/ don't rememberCannot do at all/ Unable to doA lot of difficulty 4 8",
+          "wg_wording": "0",
+          "wg_scale": "-1"
+        }
+      ]
+    },
+    "dataset_name": "lol",
+    "dataset_years": "2019",
+    "dataset_reviewer": "david"
+  }
+}

@@ -1,0 +1,537 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container-fluid my-3">
+        <div class="row mx-3">
+            <div class="col-6">
+                <div class="row">
+                    <h2>Relevant text blocks</h2>
+                </div>
+                <div class="row my-3">
+                    <span id="span-current-file">Currently working of file :</span>
+                    <span id="span-current-match">0 match out of 0</span>
+                    <span id="span-current-page"></span>
+                </div>
+
+                <div class="row">
+                    <span class=" border border-secondary bg-light" id="text-chunk-preview" style="height: 450px;overflow-y: scroll;"></span>
+                </div>
+                <div class="row my-3">
+                    <div class="col-2">
+                        <div class="btn-group" role="group" aria-label="pagination buttons">
+                            <button type="button" id="btn-first" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                </svg>
+                                First
+                            </button>
+                            <button type="button" id="btn-previous" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                </svg>
+                                Previous
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <p class="text-center" >Does this section has one or more of the following : </p>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="disabilities buttons">
+                            <button type="button" class="btn btn-outline-primary disability-btn" id="btn-seeing" value="seeing" data-bs-value="seeing">Seeing disability</button>
+                            <button type="button" class="btn btn-outline-primary disability-btn" id="btn-hearing" value="hearing" data-bs-value="hearing">Hearing disability</button>
+                            <button type="button" class="btn btn-outline-primary disability-btn" id="btn-walking" value="walking" data-bs-value="walking">Walking disability</button>
+                            <button type="button" class="btn btn-outline-primary disability-btn" id="btn-cognition" value="cognition" data-bs-value="cognition">Cognition disability</button>
+                            <button type="button" class="btn btn-outline-primary disability-btn" id="btn-self-care" value="self-care" data-bs-value="self-care">Self-care disability</button>
+                            <button type="button" class="btn btn-outline-primary disability-btn" id="btn-communication" value="communication" data-bs-value="communication">Communication disability</button>
+                            <button type="button" class="btn btn-outline-primary disability-btn" id="btn-other" value="other" data-bs-value="other">Other form of disability</button>
+                        </div>
+                    </div>
+                    <div class="col-2 text-end">
+                        <div class="btn-group" role="group" aria-label="pagination buttons">
+                            <button type="button" id="btn-next" class="btn btn-primary">
+                                Next
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </button>
+                            <button type="button" id="btn-last" class="btn btn-primary">
+                                Last
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-3 justify-content-center">
+                    <button type="button" class="btn btn-primary" id="btn-finish">I have finished with this file</button>
+                </div>
+            </div>
+            <div class="col-6" id="div-iframe">
+                <iframe
+                        id="embed-pdf"
+                        src=""
+                        type="application/pdf"
+{#                        frameBorder="0"#}
+{#                        scrolling="auto"#}
+                        height="100%"
+                        width="100%"
+                ></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- Modal window -->
+    <div class="modal fade" id="modal-disability" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="modal-disability-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-disability-title">Save match</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row visually-hidden" >
+                            <input id="disability-type">
+                        </div>
+                        <div class="row">
+                            <div class="">
+                                <label for="text-relevant-disability" class="form-label label-text">
+                                    Which part of this text contains a disability ?
+                                </label>
+                                <label for="text-relevant-disability" class="form-label label-text">
+                                    Write and/or edit the text below, so it contains only the relevant part:
+                                </label>
+                                <textarea class="form-control" id="text-relevant-disability" rows="7"></textarea>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <p>Is this text/question about :</p>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="disability-question-type" id="radio-type-functional" value="1" checked>
+                                    <label class="form-check-label" for="radio-type-functional">Functional disability</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="disability-question-type" id="radio-type-nonfunctional" value="2">
+                                    <label class="form-check-label" for="radio-type-nonfunctional">Non functional disability</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="disability-question-type" id="radio-type-broad" value="3" >
+                                    <label class="form-check-label" for="radio-type-broad">Broad activity limitation</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="disability-question-type" id="radio-type-adl" value="4" >
+                                    <label class="form-check-label" for="radio-type-adl">Activities of Daily Living (ADL)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="disability-question-type" id="radio-type-general" value="5" >
+                                    <label class="form-check-label" for="radio-type-general">Disability in general</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="disability-question-type" id="radio-type-other" value="6" >
+                                    <label class="form-check-label" for="radio-type-other">Other type of disabilities</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <p>If any scale is present in this part, does it match the WG short set ?</p>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radio-scale" id="radio-scale-yes" value="1">
+                                    <label class="form-check-label" for="radio-scale-yes">Same scale</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radio-scale" id="radio-scale-no" value="0">
+                                    <label class="form-check-label" for="radio-scale-no">Different scale</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radio-scale" id="radio-scale-unknown" value="-1" checked>
+                                    <label class="form-check-label" for="radio-scale-unknown">No information</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <div>
+                                <label for="scales-text" class="form-label label-text">
+                                    If any scale is present and is different from the WG-SS, please write them here. (leave blank if not applicable)
+                                </label>
+                                 <textarea class="form-control" id="scales-text" rows="1"></textarea>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <p>Does the wording of this part match the WG short set ?</p>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radio-wording" id="radio-wording-yes" value="1">
+                                    <label class="form-check-label" for="radio-wording-yes">Same wording</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radio-wording" id="radio-wording-no" value="0" checked>
+                                    <label class="form-check-label" for="radio-wording-no">Different wording</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btn-save-disability">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal window -->
+    <div class="modal fade" id="modal-finish" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="modal-finish-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-finish-title">Finish</h1>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="input-dataset-name">
+                            <label for="input-dataset-name">Name of this dataset</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="input-dataset-type">
+                            <label for="input-dataset-type">Type of this dataset</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="input-dataset-country">
+                            <label for="input-dataset-country">Country For this dataset</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="input-dataset-years">
+                            <label for="input-dataset-years">Year(s) of this dataset</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="input-dataset-reviewer">
+                            <label for="input-dataset-reviewer">Name and email of the reviewer (that will appear in the log)</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="input-dataset-comments">
+                            <label for="input-dataset-comments">Any comments</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btn-save-finish">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal window -->
+    <div class="modal fade" id="modal-generate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="modal-generate-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-generate-title">Completed</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>All file were analyzed</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"  id="btn-generate">Generate Report</button>
+                    <a class="btn btn-secondary" href="/search-single" role="button">Go back to the search page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block javascript %}
+    {{ super() }}
+    <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+{#        <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.js" integrity="sha512-19TrqSGVSwaC2IDGHrD+tAkX59/w5cXy0BHDVwn7OJQXxavORhFSFM7DOO9soXKuo8O7gGNHiG9R2vFrXRBcTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            const result = {{ result | tojson }};
+            const fileList = Object.keys(result);
+            let currentText;
+            let keywordList = {{ keywords | tojson }};
+            let currentFile = fileList[0];
+            let currentCursor = 0;
+            let disabilityReport = {};
+            let currentPage = 0;
+
+
+
+            async function getChunk(chunkID){
+                return await fetch("/chunk/" + chunkID).then((response) => response.json());
+            }
+
+            function setTextPreview(file, cursor) {
+                getChunk(result[file][cursor]).then(data => {
+                    if (data["_id"] != "undefined") {
+                        //$("#text-chunk-preview").html(highlight_text(data["text"].toLowerCase(), keywordList));
+                        $("#text-chunk-preview").html(data["text"]).mark(keywordList, {"accuracy":"complementary"})
+                        currentText = data["text"];
+                        currentPage = data["page"] + 1
+
+                        $("#span-current-page").html(`This block is on page ${data["page"] + 1} of this document:`)
+                        if (currentFile.endsWith(".pdf")) {
+                            //'<iframe id="embed-pdf" src="/file?path=' + encodeURIComponent(currentFile) + '&embed=True#page=' + '(data["page"] + 1)" type="application/pdf"  height="100%" width="100%"></iframe>'
+                            $("#div-iframe").html('<iframe id="embed-pdf" src="/file?path=' + encodeURIComponent(currentFile) + '&embed=True#page=' + (data["page"] + 1) + '" type="application/pdf"  height="100%" width="100%"></iframe>')
+                            //$("#embed-pdf").prop("src", "/file?path=" + encodeURIComponent(currentFile) + "&embed=True#page=" + (data["page"] + 1));
+                        } else {
+                            $("#embed-pdf").attr("src", "");
+                        }
+                    }
+
+                });
+            }
+
+            function setMatchSummary(file, cursor, totalMatch){
+                const index = fileList.indexOf(currentFile);
+                if (totalMatch != 0){
+                    $("#span-current-file").html("Currently working file : " + file.replace( "{{ drive_path | replace( "\\","\\\\") }}" +"\\", "") + " (file " + (index+1) + " out of " + fileList.length + " file(s))");
+                    $("#span-current-match").html("Currently working on match " + (cursor + 1) + " out of " + totalMatch + " total matches");
+                }else{
+                     $("#span-current-file").html("Currently working file : " + file.replace( "{{ drive_path | replace( "\\","\\\\") }}" +"\\", "") + " (file " + (index+1) + " out of " + fileList.length + " file(s))");
+                     $("#span-current-match").html("No match found for this file");
+                }
+            }
+
+            function storeDisability(disabilityType) {
+                if (!(currentFile in disabilityReport)) {
+                    disabilityReport[currentFile] = {};
+                }
+                if (!("disabilities" in disabilityReport[currentFile] )) {
+                    disabilityReport[currentFile]["disabilities"] = {};
+                }
+                if (!(disabilityType in disabilityReport[currentFile]["disabilities"])) {
+                    disabilityReport[currentFile]["disabilities"][disabilityType] = [];
+                }
+                let disabilityEntry = {
+                    chunk_number : currentCursor,
+                    page_number : currentPage,
+                    chunk_id:  result[currentFile][currentCursor],
+                    texts: $("#text-relevant-disability").val(),
+                    wg_wording:  $('input[name="radio-wording"]:checked').val(),
+                    wg_scale : $('input[name="radio-scale"]:checked').val(),
+                    wg_scale_text : $("#scales-text").val(),
+                    question_type : $('input[name="disability-question-type"]:checked').val()
+                };
+               disabilityReport[currentFile]["disabilities"][disabilityType].push(disabilityEntry)
+            }
+
+            function removeDisability(disabilityType) {
+                let index = indexOfSavedDisability(disabilityType);
+                if(index >= 0){
+                    disabilityReport[currentFile]["disabilities"][disabilityType].splice(index, 1);
+                    if (disabilityReport[currentFile]["disabilities"][disabilityType].length === 0){
+                        delete  disabilityReport[currentFile]["disabilities"][disabilityType];
+                    }
+                    if (jQuery.isEmptyObject(disabilityReport[currentFile]["disabilities"])){
+                        delete  disabilityReport[currentFile]["disabilities"];
+                    }
+                    if (jQuery.isEmptyObject(disabilityReport[currentFile])){
+                            delete disabilityReport[currentFile];
+                    }
+                }
+            }
+
+
+
+            function indexOfSavedDisability(disability){
+                let index = -1;
+                 if (currentFile in disabilityReport) {
+                     if ("disabilities" in disabilityReport[currentFile]) {
+                         if (disability in disabilityReport[currentFile]["disabilities"]) {
+                             for (let i = 0; i < disabilityReport[currentFile]["disabilities"][disability].length; i++) {
+                                 if (disabilityReport[currentFile]["disabilities"][disability][i]["chunk_number"] === currentCursor) {
+                                     return i;
+                                 }
+                             }
+                         }
+                     }
+                }
+                return index;
+            }
+
+            function updateDisabilityButtons() {
+                $(".disability-btn").removeClass("btn-primary").addClass("btn-outline-primary");
+                if (currentFile in disabilityReport) {
+                    if ("disabilities" in disabilityReport[currentFile]) {
+                        for (const disability in disabilityReport[currentFile]["disabilities"]) {
+                            if (indexOfSavedDisability(disability) >= 0) {
+                                $("#btn-" + disability).removeClass("btn-outline-primary").addClass("btn-primary");
+                            }
+                        }
+                    }
+                }
+            }
+
+            function updateView(){
+                setTextPreview(currentFile,currentCursor);
+                setMatchSummary(currentFile, currentCursor, result[currentFile].length);
+                updateNavigationButton();
+                updateDisabilityButtons()
+            }
+
+            function updateNavigationButton(){
+                let prevButton = $("#btn-previous");
+                let nextButton = $("#btn-next");
+                let firstButton = $("#btn-first");
+                let lastButton = $("#btn-last");
+                if (currentCursor === 0){
+                    prevButton.attr("disabled", true)
+                    firstButton.attr("disabled", true)
+                } else {
+                    prevButton.removeAttr("disabled");
+                    firstButton.removeAttr("disabled");
+                }
+                if (currentCursor >= result[currentFile].length -1){
+                    nextButton.attr("disabled", true);
+                    lastButton.attr("disabled", true)
+                } else {
+                    nextButton.removeAttr("disabled");
+                    lastButton.removeAttr("disabled");
+                }
+            }
+
+            //event listeners
+
+            $("#btn-previous").click(evt=>{
+                currentCursor = currentCursor-1;
+                updateView();
+            });
+
+            $("#btn-next").click(evt=>{
+                currentCursor = currentCursor+1;
+                updateView();
+            });
+
+            $("#btn-first").click(evt=>{
+                currentCursor = 0;
+                updateView();
+            });
+
+            $("#btn-last").click(evt=>{
+                currentCursor = result[currentFile].length -1;
+                updateView();
+            });
+
+            $(".disability-btn").click((evt)=>{
+                //let button = evt.target;
+                //if ($(button).hasClass("btn-outline-primary")){
+                //    storeDisability(button.value)
+                //}else {
+                //    removeDisability(button.value)
+                //}
+                //updateView()
+                if(indexOfSavedDisability(evt.target.value) >= 0){
+                    removeDisability(evt.target.value)
+                    updateView()
+                }else{
+                    const modal = new bootstrap.Modal("#modal-disability" )
+                    modal.show(evt.target)
+                }
+
+            });
+
+            $("#btn-finish").click((evt)=>{
+                const modal = new bootstrap.Modal("#modal-finish" )
+                modal.show(evt.target)
+
+            });
+
+            $("#btn-save-disability").click((evt)=>{
+                let  disabilityType = $("#disability-type").val()
+                storeDisability(disabilityType);
+                updateView()
+            });
+
+            $("#btn-generate").click((evt) => {
+
+                // Use XMLHttpRequest instead of Jquery $ajax
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    var a;
+                    if (xhttp.readyState === 4 && xhttp.status === 200) {
+                        // Trick for making downloadable link
+                        a = document.createElement('a');
+                        a.href = window.URL.createObjectURL(xhttp.response);
+                        // Give filename you wish to download
+                        a.download = "log.xlsx";
+                        a.style.display = 'none';
+                        document.body.appendChild(a);
+                        a.click();
+                    }
+                };
+                // Post data to URL which handles post request
+                xhttp.open("POST", "/log");
+                xhttp.setRequestHeader("Content-Type", "application/json");
+                // You should set responseType as blob for binary responses
+                xhttp.responseType = 'blob';
+                xhttp.send(JSON.stringify(disabilityReport));
+            });
+
+            $("#btn-save-finish").click((evt)=>{
+                if (!(currentFile in disabilityReport)) {
+                    disabilityReport[currentFile] = {};
+                }
+                if(!("disabilities" in disabilityReport[currentFile])){
+                    disabilityReport[currentFile]["disabilities"] = {}
+                }
+                disabilityReport[currentFile]["dataset_name"] = $("#input-dataset-name").val()
+                disabilityReport[currentFile]["dataset_type"] = $("#input-dataset-type").val()
+                disabilityReport[currentFile]["dataset_country"] = $("#input-dataset-country").val()
+                disabilityReport[currentFile]["dataset_years"] = $("#input-dataset-years").val()
+                disabilityReport[currentFile]["dataset_reviewer"] = $("#input-dataset-reviewer").val()
+                disabilityReport[currentFile]["dataset_comments"] = $("#input-dataset-comments").val()
+                const index = fileList.indexOf(currentFile);
+                if(index >= 0){
+                    if(index >= fileList.length-1){
+                        //
+                        const modal = new bootstrap.Modal("#modal-generate" )
+                        modal.show(evt.target)
+
+                    }else {
+                        currentFile = fileList[index+1]
+                        currentCursor = 0;
+                        updateView();
+                    }
+                }
+            });
+
+            const disabilityModal = document.getElementById('modal-disability')
+            disabilityModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget
+                const disability = button.getAttribute('data-bs-value')
+                disabilityModal.querySelector('.label-text').innerHTML = `Which part of this text contains ${disability} disability ?`;
+                disabilityModal.querySelector('#text-relevant-disability').value = currentText;
+                disabilityModal.querySelector('#disability-type').value = disability;
+                disabilityModal.querySelector('#radio-scale-unknown').checked = true;
+                disabilityModal.querySelector('#radio-wording-no').checked = true;
+                disabilityModal.querySelector("#radio-type-functional").checked = true;
+                  disabilityModal.querySelector('#scales-text').value = "";
+            })
+
+            const finishModal = document.getElementById('modal-finish')
+            finishModal.addEventListener('show.bs.modal', event => {
+                finishModal.querySelector('#modal-finish-title').innerHTML = `Finish  ${currentFile.replace("{{ drive_path | replace( "\\","\\\\") }}" + "\\", "")}`;
+                finishModal.querySelector('#input-dataset-name').value ="";
+                finishModal.querySelector('#input-dataset-type').value ="";
+                finishModal.querySelector('#input-dataset-country').value ="";
+                finishModal.querySelector('#input-dataset-years').value ="";
+                finishModal.querySelector('#input-dataset-reviewer').value ="";
+                finishModal.querySelector('#input-dataset-comments').value ="";
+            })
+
+            updateView();
+
+        </script>
+    {% endblock %}
+{% endblock %}
