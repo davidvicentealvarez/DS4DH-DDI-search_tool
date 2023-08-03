@@ -11,8 +11,7 @@ import pandas as pd
 import traceback
 from tqdm import tqdm
 from trectools import TrecQrel, TrecRun, TrecEval
-es = Elasticsearch(ES_HOST+":"+ES_PORT, ca_certs=ES_CERT_PATH,
-                   basic_auth=(ES_USER, ES_PWD))
+es = Elasticsearch(ES_HOST+":"+ES_PORT)
 
 
 def get_positive_data(filepath: str):
