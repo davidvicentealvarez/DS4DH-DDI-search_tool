@@ -75,7 +75,7 @@ def multi_search():
 
 @app.route("/search-single", methods=['GET', 'POST'])
 def single_search():
-    countries = os.listdir(Path(PureWindowsPath(DRIVE_PATH)))
+    countries = sorted(os.listdir(Path(PureWindowsPath(DRIVE_PATH))), key=str.casefold)
     if request.method == "POST":
         query = request.form.get("query")
         filepaths = request.form.get("filepaths")
@@ -140,7 +140,7 @@ def get_chunks():
 
 @app.route("/upload-page", methods=["GET", "POST"])
 def get_upload_page():
-    countries = os.listdir(Path(PureWindowsPath(DRIVE_PATH)))
+    countries = sorted(os.listdir(Path(PureWindowsPath(DRIVE_PATH))), key=str.casefold)
     report = dict()
     if request.method == "POST":
         report = upload_files()
