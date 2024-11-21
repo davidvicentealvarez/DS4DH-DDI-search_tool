@@ -1,0 +1,584 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container-fluid  my-3" style="max-width:85%">
+        <h1>Analyze files to identify disabilities questions</h1>
+        <form action="{{ prefix }}/analyze" method="post" id="searchForm" enctype="multipart/form-data">
+            <h2>Step 1: Select a file to analyze</h2>
+            <div class="row border-bottom">
+                <div class="col-6 my-3">
+                    <div class="input-group has-validation">
+                        <label for="file-input" class="input-group-text">Select your files to review</label>
+                        <input class="form-control" id="file-input" type="file" name="file" accept=".pdf,.xlsx,.xls,.csv,.txt,.docx" multiple required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please select a file
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 my-3">
+                    <div class="input-group has-validation">
+
+                        <label class="input-group-text" for="country-select">Select a directory to store the source questionnaires</label>
+                        <select class="form-select" aria-label="Default select example" id="country-select"
+                                name="country" required>
+                            <option disabled value="" selected>Select a directory</option>
+                            {% for country in countries %}
+                                <option value="{{ country }}">{{ country | replace("_","") }}</option>
+                            {% endfor %}
+                        </select>
+{#                        <button type="button" class="btn btn-secondary" id="btn-country-add">Add new directory</button>#}
+
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please select a country
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="output"></div>
+            <h2>Step 2: Define keywords to search</h2>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <span>Select the language of the keywords</span>
+                    </div>
+                    <div class="btn-group my-3" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check language-radio" name="language"
+                               value="/static/media/terms_eng.json" id="language2" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="language2">English</label>
+
+                        <input type="radio" class="btn-check language-radio" name="language"
+                               value="/static/media/terms_fra.json" id="language3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="language3">French</label>
+                        <input type="radio" class="btn-check language-radio" name="language"
+                               value="/static/media/terms_deu.json" id="language1" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="language1">German</label>
+                        <input type="radio" class="btn-check language-radio" name="language"
+                               value="/static/media/terms_ita.json" id="language4" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="language4">Italian</label>
+
+                        <input type="radio" class="btn-check language-radio" name="language"
+                               value="/static/media/terms_por.json" id="language5" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="language5">Portuguese</label>
+
+                        <input type="radio" class="btn-check language-radio" name="language"
+                               value="/static/media/terms_spa.json" id="language6" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="language6">Spanish</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <span>Search disabilities</span>
+                    </div>
+                    <div class="row my-3">
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input disability-checkbox" name="disability-checkbox" type="checkbox" value="seeing"
+                                       id="seeingcheckbox">
+                                <label class="form-check-label" for="seeingcheckbox">Seeing</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input disability-checkbox" name="disability-checkbox" type="checkbox" value="hearing"
+                                       id="hearingcheckbox">
+                                <label class="form-check-label" for="hearingcheckbox">Hearing</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input disability-checkbox" name="disability-checkbox" type="checkbox" value="walking"
+                                       id="walkingcheckbox">
+                                <label class="form-check-label" for="walkingcheckbox">Walking</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input disability-checkbox" name="disability-checkbox" type="checkbox" value="cognition"
+                                       id="cognitioncheckbox">
+                                <label class="form-check-label" for="cognitioncheckbox">Cognition</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input disability-checkbox" name="disability-checkbox" type="checkbox" value="self-care"
+                                       id="self-carecheckbox">
+                                <label class="form-check-label" for="self-carecheckbox">Self-care</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input disability-checkbox" name="disability-checkbox" type="checkbox"
+                                       value="communication"
+                                       id="communicationcheckbox">
+                                <label class="form-check-label" for="communicationcheckbox">Communication</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input disability-checkbox" name="disability-checkbox" type="checkbox"
+                                       value="other"
+                                       id="othercheckbox">
+                                <label class="form-check-label" for="othercheckbox">Other</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="checkbox" class="btn-check" id="btn-all" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btn-all" id="label-btn-all">Select all</label>
+                </div>
+            </div>
+            <div class="input-group my-4 visually-hidden">
+                <textarea class="form-control" aria-label="Preview of the query" name="query" id="textpreview"
+                          style="height: 300px;"></textarea>
+                <textarea type="text" name="filepaths" id="filepaths"></textarea>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-6">
+                <h2>Keywords</h2>
+                <p>Add, modify, or delete the terms below to customize your search query within questionnaires</p>
+            </div>
+            <div class="col-6 align-self-center">
+                <button type="button" class="btn btn-primary" id="searchsubmit" disabled>Search</button>
+            </div>
+        </div>
+        <div class="row justify-content-center text-break mt-3">
+            <div class="col border search-items-ui search-items-seeing visually-hidden">
+                <table id="seeing-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Seeing</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-hearing visually-hidden">
+                <table id="hearing-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Hearing</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-walking visually-hidden">
+                <table id="walking-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Walking</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-cognition visually-hidden">
+                <table id="cognition-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Cognition</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col border search-items-ui search-items-self-care visually-hidden">
+                <table id="self-care-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Self-care</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-communication visually-hidden">
+                <table id="communication-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Communication</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-other visually-hidden">
+                <table id="other-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Other disabilities</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row justify-content-center text-break">
+            <div class="col add-table visually-hidden add-table-seeing">
+                <button type="button" class="btn btn-secondary my-2" id="btn-seeing-table">add
+                    item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-hearing">
+                <button type="button" class="btn btn-secondary my-2" id="btn-hearing-table">
+                    add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-walking">
+                <button type="button" class="btn btn-secondary my-2" id="btn-walking-table">
+                    add item
+                </button>
+            </div>
+            <div class="col  add-table visually-hidden add-table-cognition">
+                <button type="button" class="btn btn-secondary my-2" id="btn-cognition-table">
+                    add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-self-care">
+                <button type="button" class="btn btn-secondary my-2" id="btn-self-care-table">
+                    add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-communication">
+                <button type="button" class="btn btn-secondary my-2"
+                        id="btn-communication-table">add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-other">
+                <button type="button" class="btn btn-secondary my-2"
+                        id="btn-other-table">add item
+                </button>
+            </div>
+        </div>
+    </div>
+
+      <!-- Modal window -->
+    <div class="modal fade" id="modal-waiting" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="modal-waiting-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="spinner-border me-3" role="status">
+                        <span class="visually-hidden">Your file(s) are being processed. Please wait, you will be redirected when completed.</span>
+                    </div>
+                    <h1 class="modal-title fs-5" id="modal-waiting-title">Processing</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <span class="">Your file(s) are being processed. Please wait, you will be redirected when completed</span>
+                    <div class="alert alert-danger my-3 visually-hidden" id="alert-error" role="alert">
+                        An error occurred with one of your file and could not be processed
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block javascript %}
+        {{ super() }}
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+                crossorigin="anonymous"></script>
+        <script
+                src="https://code.jquery.com/jquery-3.6.1.js"
+                integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+                crossorigin="anonymous"></script>
+        <script src="{{ prefix }}/static/media/bootstable.js"></script>
+        <script>
+
+            // MODEL
+            let json_file = '{{ prefix }}/static/media/terms_eng.json';
+            let search_fields = []
+
+            $("#seeing-table").SetEditable()
+            $('#btn-seeing-table').click(function () {
+                rowAddNewAndEdit('seeing-table', ["new item"], ["search-keyword seeing-table-item"]);
+            });
+            $("#hearing-table").SetEditable()
+            $('#btn-hearing-table').click(function () {
+                rowAddNewAndEdit('hearing-table', ["new item"], ["search-keyword hearing-table-item"]);
+            });
+            $("#walking-table").SetEditable()
+            $('#btn-walking-table').click(function () {
+                rowAddNewAndEdit('walking-table', ["new item"], ["search-keyword walking-table-item"]);
+            });
+            $("#cognition-table").SetEditable()
+            $('#btn-cognition-table').click(function () {
+                rowAddNewAndEdit('cognition-table', ["new item"], ["search-keyword cognition-table-item"]);
+            });
+            $("#self-care-table").SetEditable()
+            $('#btn-self-care-table').click(function () {
+                rowAddNewAndEdit('self-care-table', ["new item"], ["search-keyword self-care-table-item"]);
+            });
+            $("#communication-table").SetEditable()
+            $('#btn-communication-table').click(function () {
+                rowAddNewAndEdit('communication-table', ["new item"], ["search-keyword communication-table-item"]);
+            });
+            $("#other-table").SetEditable()
+            $('#btn-other-table').click(function () {
+                rowAddNewAndEdit('other-table', ["new item"], ["search-keyword other-table-item"]);
+            });
+
+            $("#btn-country-add").click((evt)=>{
+                let dirName = prompt("Write new directory name")
+                if (dirName != null){
+                    $.post("{{ prefix }}/directory/" + encodeURIComponent(dirName)).always(function (){
+                        window.location.reload();
+                    });
+                }
+            });
+
+            // Language radio event listener
+            const lan_radios = document.querySelectorAll(".language-radio")
+            Array.from(lan_radios).forEach(rad => {
+                rad.addEventListener("change", function () {
+                    if (this.checked) {
+                        json_file = "{{ prefix }}" + this.value;
+                    }
+                    update_query_preview_v2();
+                });
+            });
+
+
+            function updateDisabilityList(checkbox) {
+                if (checkbox.checked) {
+                    search_fields.push(checkbox.value)
+                } else {
+                    search_fields = search_fields.filter(e => e !== checkbox.value)
+                }
+            }
+
+            // disabilities checkboxes event listener
+            const disabilityCheckboxes = document.querySelectorAll(".disability-checkbox")
+            Array.from(disabilityCheckboxes).forEach(checkbox => {
+                checkbox.addEventListener("change", function () {
+                    updateDisabilityList(this);
+                    update_query_preview_v2();
+                });
+            });
+
+            // select-unselect button event listener
+            const btnAll = document.querySelector("#btn-all")
+            btnAll.addEventListener("click", function () {
+                label = document.querySelector("#label-btn-all");
+                if (this.checked) {
+                    label.innerHTML = "Unselect all"
+                } else {
+                    label.innerHTML = "Select all"
+                }
+                search_fields = []
+                Array.from(disabilityCheckboxes).forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                    checkbox.ariaChecked = this.ariaChecked;
+                    updateDisabilityList(checkbox);
+                });
+                update_query_preview_v2();
+            });
+
+
+            function hide_unselected_disabilities() {
+                $(".search-items-ui").addClass("visually-hidden")
+                $(".add-table").addClass("visually-hidden")
+                for (const i in search_fields) {
+                    $(".search-items-" + search_fields[i]).removeClass("visually-hidden")
+                    $(".add-table-" + search_fields[i]).removeClass("visually-hidden")
+                }
+            }
+
+            // update function V2
+            async function update_query_preview_v2() {
+                const searchItems = await fetch(json_file).then((response) => response.json());
+                $("#seeing-table > tbody > tr").empty();
+                $("#hearing-table > tbody > tr").empty();
+                $("#walking-table > tbody > tr").empty();
+                $("#cognition-table > tbody > tr").empty();
+                $("#self-care-table > tbody > tr").empty();
+                $("#communication-table > tbody > tr").empty();
+                $("#other-table > tbody > tr").empty()
+                $("#searchsubmit").attr("disabled", search_fields.length === 0)
+                for (const i in search_fields) {
+                    let tableId = search_fields[i] + "-table"
+                    for (const j in searchItems["fuzzy"][search_fields[i]]) {
+                        rowAddNew(tableId, [searchItems["fuzzy"][search_fields[i]][j]], ["search-keyword " + tableId + "-item"])
+                    }
+                }
+                hide_unselected_disabilities();
+                //console.log(build_query_json())
+
+            }
+
+            function get_keywords(query) {
+                let keywordList = []
+                for (const key in query) {
+                    keywordList.push(...query[key])
+                }
+
+                return keywordList
+
+            }
+
+            function build_query_json() {
+                let allKeywords = $(".search-keyword").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    return {"any": allKeywords}
+            }
+
+
+            // submit query
+            document.querySelector("#searchsubmit").addEventListener("click", function () {
+                saveForm();
+                if (validate_file_input()) {
+                    const modal = new bootstrap.Modal("#modal-waiting");
+                    modal.show()
+                    upload_file();
+                }
+
+            });
+
+            document.querySelector("#searchForm").addEventListener("submit", function (event) {
+                event.preventDefault()
+                event.stopPropagation()
+            });
+
+            function submit_form() {
+                let form = document.querySelector("#searchForm")
+                try {
+                    //let query = JSON.parse(document.querySelector("#textpreview").value);
+                    let query = build_query_json()
+                    $("#textpreview").val(JSON.stringify(query))
+                    form.submit();
+                } catch (e) {
+                    window.alert("could not parse the query as JSON");
+                    console.log(e)
+                }
+            }
+
+            function validate_file_input() {
+                let valid = true;
+                const fileInput = $("#file-input");
+                const countrySelect = $("#country-select");
+                if (fileInput[0].files.length >= 1) {
+                    fileInput.removeClass("is-invalid")
+                    fileInput.addClass("is-valid")
+                } else {
+                    fileInput.removeClass("is-valid")
+                    fileInput.addClass("is-invalid")
+                    valid = false;
+                }
+                if (countrySelect.val() === undefined || countrySelect.val() === null) {
+                    countrySelect.removeClass("is-valid")
+                    countrySelect.addClass("is-invalid")
+                    valid = false;
+                } else {
+                    countrySelect.removeClass("is-invalid")
+                    countrySelect.addClass("is-valid")
+                }
+                return valid;
+            }
+
+
+
+            function upload_file() {
+                const fileInput = $("#file-input")[0]
+                const form = document.createElement("form")
+                form.enctype = "multipart/form-data"
+                form.action = "{{ prefix }}/upload-files"
+                form.method = "POST"
+                const formData = new FormData(form);
+                for (var i = 0; i < fileInput.files.length; i++) {
+                    formData.append("files", fileInput.files[i]);
+
+                }
+                formData.append("country", $("#country-select").val());
+                const request = new XMLHttpRequest();
+                request.open("POST", "{{ prefix }}/upload-files");
+                request.onreadystatechange = (progress) => {
+                    if (request.readyState === XMLHttpRequest.DONE) {
+                        if (request.status === 200) {
+                            const data = JSON.parse(request.response);
+                            let filepaths = data["chunks"]["success"]
+                            if (filepaths.length > 0){
+                                $("#filepaths").val(JSON.stringify(filepaths));
+                                submit_form();
+                            }else{
+                                $("#alert-error").removeClass("visually-hidden");
+                            }
+                        } else {
+                            $("#alert-error").removeClass("visually-hidden");
+                        }
+                    }
+                };
+                {#request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");#}
+                request.send(formData);
+
+            }
+
+            function saveForm() {
+                let seeingKeywords = $(".seeing-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let hearingKeywords = $(".hearing-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let walkingKeywords = $(".walking-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let cognitionKeywords = $(".cognition-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let selfCareKeywords = $(".self-care-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let communicationKeywords = $(".communication-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let otherKeywords = $(".other-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let keywords =  {
+                    "seeing": seeingKeywords,
+                    "hearing": hearingKeywords,
+                    "walking": walkingKeywords,
+                    "cognition": cognitionKeywords,
+                    "self-care": selfCareKeywords,
+                    "communication": communicationKeywords,
+                    "other": otherKeywords
+                }
+                let language = $('input[name="language"]:checked').prop("id")
+                let checkboxes = $(".disability-checkbox:checked").map(function() { return this.id; }).get();
+                localStorage.setItem("form", JSON.stringify({"keywords":keywords, "checkboxes":checkboxes, "language":language}))
+            }
+
+            function reloadFormFromSave(){
+                let save = localStorage.getItem("form");
+                if(save != null){
+                    save = JSON.parse(save)
+                    json_file = "{{ prefix }}" + $("#" + save["language"]).attr("checked", true).val();
+                    for(const checkID of save["checkboxes"]){
+                        $("#" + checkID).attr("checked", true);
+                        search_fields.push( $("#" + checkID).val());
+                    }
+
+                }
+                for (const i in search_fields) {
+                    let tableId = search_fields[i] + "-table"
+                    for (const j in save["keywords"][search_fields[i]]) {
+                        rowAddNew(tableId, [save["keywords"][search_fields[i]][j]], ["search-keyword " + tableId + "-item"])
+                    }
+                }
+                hide_unselected_disabilities();
+                $("#searchsubmit").attr("disabled", search_fields.length === 0)
+            }
+
+            reloadFormFromSave();
+
+        </script>
+    {% endblock %}
+{% endblock %}

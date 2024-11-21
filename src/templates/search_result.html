@@ -1,0 +1,341 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container-fluid my-3">
+        <div class="row">
+            <div class="col-8">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Filepath</th>
+                            <th scope="col">Directory name</th>
+                            <th scope="col">File type</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(results | length) %}
+                            <tr>
+                                <td id="fp_{{ i }}">{{ results[i]["_source"]["filepath"] | replace( drive_path + "\\","") }}</td>
+                                <td>{{ results[i]["_source"]["country"] | replace("_","") }}</td>
+                                <td>{{ results[i]["_source"]["filetype"] }}</td>
+                                <td>{{ "{:.2f}".format(results[i]["_score_rel"]) }}</td>
+                                <td>
+                                    <a href="{{ prefix }}/file?path={{ results[i]["_source"]["filepath"] | urlencode }}" class="btn btn-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="btn-group" role="group" aria-label="result pagination">
+                        <button type="button" class="btn btn-outline-dark result-pagination-first">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark result-pagination-previous">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-outline-primary result-pagination {% if page_number <= 1 %}active{% endif %}" aria-pressed="{% if page_number <= 1 %}true{% else %}false{% endif %}" id="result-pagination-1">
+                            {% if page_number <= 2 %}
+                                {{ 1 }}
+                            {% elif page_number >= max_page - 1 %}
+                                {{ max_page - 4 }}
+                            {% else %}
+                                {{ page_number - 2 }}
+                            {% endif %}
+                        </button>
+                        {% if max_page > 1 %}
+                            <button type="button" class="btn btn-outline-primary result-pagination {% if page_number == 2 %}active{% endif %}" aria-pressed="{% if page_number == 2 %}true{% else %}false{% endif %}" id="result-pagination-2">
+                                {% if page_number <= 2 %}
+                                    {{ 2 }}
+                                {% elif page_number >= max_page - 1 %}
+                                    {{ max_page - 3 }}
+                                {% else %}
+                                    {{ page_number - 1 }}
+                                {% endif %}
+                            </button>
+                        {% endif %}
+                        {% if max_page > 2 %}
+                            <button type="button" class="btn btn-outline-primary result-pagination  {% if page_number > 2 and page_number <= max_page - 2 %}active{% endif %}" aria-pressed="{% if page_number > 2 and page_number <= max_page - 2  %}true{% else %}false{% endif %}" id="result-pagination-3">
+                                {% if page_number <= 2 %}
+                                    {{ 3 }}
+                                {% elif page_number >= max_page - 1 %}
+                                    {{ max_page  - 2 }}
+                                {% else %}
+                                    {{ page_number  }}
+                                {% endif %}
+                            </button>
+                        {% endif %}
+                        {% if max_page > 3 %}
+                            <button type="button" class="btn btn-outline-primary result-pagination {% if page_number == max_page - 1 %}active{% endif %}" aria-pressed="{% if page_number == max_page - 1 %}true{% else %}false{% endif %}" id="result-pagination-4">
+                                {% if page_number <= 2 %}
+                                    {{ 4 }}
+                                {% elif page_number >= max_page - 1 %}
+                                    {{ max_page - 1 }}
+                                {% else %}
+                                    {{ page_number + 1  }}
+                                {% endif %}
+                            </button>
+                        {% endif %}
+                        {% if max_page > 4 %}
+                            <button type="button" class="btn btn-outline-primary result-pagination {% if page_number == max_page %}active{% endif %}" aria-pressed="{% if page_number == max_page %}true{% else %}false{% endif %}" id="result-pagination-5">
+                                {% if page_number <= 2 %}
+                                    {{ 5 }}
+                                {% elif page_number >= max_page - 1 %}
+                                    {{ max_page }}
+                                {% else %}
+                                    {{ page_number + 2  }}
+                                {% endif %}
+                            </button>
+                        {% endif %}
+                        <button type="button" class="btn btn-outline-dark result-pagination-next">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark result-pagination-last">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <form action="{{ prefix }}/search" method="post" id="searchForm" class=".d-none">
+                    <textarea class="visually-hidden" aria-label="Preview of the query" name="query" id="textpreview"></textarea>
+                    <input type="number" class="visually-hidden" id="size" placeholder="number" value="10" name="size">
+                </form>
+            </div>
+            <div class="col-4">
+                <div class="row h-100 me-1">
+                    <h3>Relevant text blocks</h3>
+                    <span class="h-100 border border-secondary bg-light" id="text-chunk-preview"></span>
+                </div>
+                <div class="row me-1">
+                    <div class="input-group mb-3 px-0">
+                        <span class="input-group-text">Page number</span>
+                        <input type="text" class="form-control" aria-label="page number" readonly id="preview-page-number">
+                        <span class="input-group-text">Chunk number</span>
+                        <input type="text" class="form-control" aria-label="chunk number" readonly id="preview-chunk-number">
+                        <span class="input-group-text">Text length</span>
+                        <input type="text" class="form-control" aria-label="text length" readonly id="preview-text-length">
+                    </div>
+                    <div class="btn-group" role="group" aria-label="chunk pagination">
+                        <button type="button" class="btn btn-outline-dark chunk-pagination-first">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark chunk-pagination-previous">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary chunk-pagination" aria-pressed="false" id="chunk-pagination-1">1</button>
+                        <button type="button" class="btn btn-outline-secondary chunk-pagination" aria-pressed="false" id="chunk-pagination-2">2</button>
+                        <button type="button" class="btn btn-outline-secondary chunk-pagination" aria-pressed="false" id="chunk-pagination-3">3</button>
+                        <button type="button" class="btn btn-outline-dark chunk-pagination-next">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark chunk-pagination-last">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    {% block javascript %}
+    {{ super() }}
+    <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            let textChunks = []
+            let currentChunkCursor = 0
+            let currentPageCursor = {{ page_number }};
+
+            let query = localStorage.getItem("query")
+            $("#textpreview").val(query);
+            let size = localStorage.getItem("size")
+            $("#size").val(size)
+
+            let stopwords = {}
+            fetch("{{ terms_file }}").then((response) => response.json()).then(json => stopwords=new Set(json["stopwords"]));
+
+            $('.table > tbody > tr').click(function() {
+                let filepath = "{{ drive_path | replace( "\\","\\\\") }}" + "\\" + this.children[0].innerHTML;
+                let keywordList = JSON.parse(localStorage.getItem("keywords"));
+                $.ajax({
+                    type: "POST",
+                    url: "{{ prefix }}/chunk/search",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({"filepath": filepath, "keywords": keywordList}),
+                    //data: {"filepath": filepath, "keywords": keywordList},
+                    success: function (data){
+                        textChunks = data
+                        currentChunkCursor = 0
+                        updateTextPreview()
+                        update_chunk_pagination()
+                    },
+                    error: function (error){
+                        console.log(error)
+                    }
+                });
+            });
+
+            function update_chunk_pagination(){
+                if (textChunks.length === 0) {
+                    $(".chunk-pagination-first").addClass("disabled")
+                    $(".chunk-pagination-previous").addClass("disabled")
+                    $(".chunk-pagination").addClass("disabled").removeClass("active").attr("aria-pressed", "false")
+                    $(".chunk-pagination-next").addClass("disabled")
+                    $(".chunk-pagination-last").addClass("disabled")
+
+                } else {
+                    $(".chunk-pagination-first").removeClass("disabled")
+                    $(".chunk-pagination-previous").removeClass("disabled")
+                    $(".chunk-pagination").removeClass("disabled").removeClass("active").attr("aria-pressed", "false")
+                    $(".chunk-pagination-next").removeClass("disabled")
+                    $(".chunk-pagination-last").removeClass("disabled")
+                    if (currentChunkCursor === 0) {
+                        $("#chunk-pagination-1").addClass("active").attr("aria-pressed", "true").html(currentChunkCursor+1)
+                        $("#chunk-pagination-2").html(currentChunkCursor+2)
+                        $("#chunk-pagination-3").html(currentChunkCursor+3)
+                    } else if (currentChunkCursor === textChunks.length-1 ) {
+                        $("#chunk-pagination-1").html(currentChunkCursor -1)
+                        $("#chunk-pagination-2").html(currentChunkCursor)
+                        $("#chunk-pagination-3").addClass("active").attr("aria-pressed", "true").html(currentChunkCursor+1)
+                    } else  {
+                        $("#chunk-pagination-1").html(currentChunkCursor)
+                        $("#chunk-pagination-2").addClass("active").attr("aria-pressed", "true").html(currentChunkCursor+1)
+                        $("#chunk-pagination-3").html(currentChunkCursor+2)
+                    }
+                }
+            }
+
+            $('.table > tbody > tr').hover(function() {
+                $(this).css('cursor','pointer');
+            });
+
+            function updateTextPreview(){
+                let keywordList = JSON.parse(localStorage.getItem("keywords"))
+                if (currentChunkCursor < 0) {
+                    currentChunkCursor = textChunks.length - 1;
+                }
+                if (textChunks.length > 0){
+                    $("#text-chunk-preview").html(textChunks[currentChunkCursor]["_source"]["text"]).mark(keywordList, {"accuracy":"complementary"});
+                    $("#preview-page-number").val(textChunks[currentChunkCursor]["_source"]["page"] + 1);
+                    $("#preview-chunk-number").val(textChunks[currentChunkCursor]["_source"]["chunk"]);
+                    $("#preview-text-length").val( textChunks[currentChunkCursor]["_source"]["length"]);
+                } else {
+                    $("#text-chunk-preview").val("");
+                    $("#preview-page-number").val("");
+                    $("#preview-chunk-number").val("");
+                    $("#preview-text-length").val("");
+                }
+
+            }
+
+            function escapeRegex(string) {
+                return string.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
+            }
+
+            function highlight_text(text, terms){
+                if (terms.length === 0){
+                    return text
+                }
+                let words = []
+                for(let i = 0; i < terms.length; i++){
+                    Array.prototype.push.apply(words, terms[i].split(/\s+/))
+                }
+                words = words.filter(function (value, index, arr){return !stopwords.has(value)});
+                let regex = "(" + escapeRegex(words[0]) + ")"
+                for(let i = 1; i < words.length; i++){
+                    regex = regex + "|(" + escapeRegex(words[i]) + ")"
+                }
+                let re = new RegExp(regex, "gi")
+                text = text.replace(re, '<mark class="px-0">$&</mark>')
+                return text
+            }
+
+
+            $(".chunk-pagination-first").click(function (){
+                currentChunkCursor = 0
+                updateTextPreview()
+                update_chunk_pagination()
+            });
+
+            $(".chunk-pagination-previous").click(function (){
+                if (currentChunkCursor > 0) {
+                    currentChunkCursor--;
+                    updateTextPreview()
+                    update_chunk_pagination()
+                }
+            });
+
+            $(".chunk-pagination").click(function (){
+                currentChunkCursor = Number(this.innerHTML) -1
+                updateTextPreview()
+                update_chunk_pagination()
+            });
+
+            $(".chunk-pagination-next").click(function (){
+                if (currentChunkCursor < textChunks.length -1) {
+                    currentChunkCursor++;
+                    updateTextPreview()
+                    update_chunk_pagination()
+                }
+            });
+
+            $(".chunk-pagination-last").click(function (){
+                currentChunkCursor = textChunks.length -1
+                updateTextPreview()
+                update_chunk_pagination()
+            });
+
+
+            $(".result-pagination-first").click(function (){
+                $("#searchForm").attr("action", "{{ prefix }}/search?page=1").submit()
+            });
+
+            $(".result-pagination-previous").click(function (){
+                $("#searchForm").attr("action", "{{ prefix }}/search?page=" + (currentPageCursor - 1)).submit()
+            });
+
+            $(".result-pagination").click(function (){
+                $("#searchForm").attr("action", "{{ prefix }}/search?page=" + this.innerHTML.trim()).submit()
+            });
+
+            $(".result-pagination-next").click(function (){
+                $("#searchForm").attr("action", "{{ prefix }}/search?page=" + (currentPageCursor +1)).submit()
+            });
+
+            $(".result-pagination-last").click(function (){
+               $("#searchForm").attr("action", "{{ prefix }}/search?page={{ max_page }}").submit()
+            });
+
+        </script>
+    {% endblock %}
+{% endblock %}

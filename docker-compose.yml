@@ -1,0 +1,31 @@
+services:
+   disability_tool:
+      image: qr-ddr:1.0
+      build:
+         context: .
+         dockerfile: Dockerfile
+      environment:
+         - LOG_LEVEL=INFO
+      container_name: disability_tool
+      ports:
+         - 8901:8901
+      extra_hosts:
+         - "host.docker.internal:host-gateway"
+      volumes:
+         - ./drive:/app/drive
+      restart: unless-stopped
+      # logging:
+      #    driver: journald
+   elasticsearch_ddi:
+      image : docker.elastic.co/elasticsearch/elasticsearch:8.5.0
+      container_name : elasticsearch_ddi
+      ports :
+         - 9800:9800
+      volumes :
+         - ./elasticsearch-8.5.0/data:/usr/share/elasticsearch/data
+         - ./elasticsearch-8.5.0/config:/usr/share/elasticsearch/config
+      restart: unless-stopped
+      # logging:
+      #    driver: journald
+
+

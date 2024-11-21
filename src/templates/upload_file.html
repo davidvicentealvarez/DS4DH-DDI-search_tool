@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container-fluid  my-3" style="max-width:85%">
+        <h1>Upload files</h1>
+        <form method="POST" action="{{ prefix }}/upload" class="needs-validation" novalidate  enctype = "multipart/form-data">
+            <div class="row my-3" >
+                <label for="country-select">Select a directory to store the raw questionnaires</label>
+                <select class="form-select" aria-label="Default select example" id="country-select" name="country" required>
+                <option disabled value="" selected>Select a directory</option>
+                {% for country in countries %}
+                    <option value="{{ country }}">{{ country | replace("_","") }}</option>
+                {% endfor %}
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please select a country
+                </div>
+            </div>
+            <div class="row my-3">
+                <label for="files-input">Supported file extensions: .pdf, .xlsx, .xls, .csv, .txt, .docx.</label>
+                <input type="file" multiple="multiple" accept=".pdf,.xlsx,.xls,.csv,.txt,.docx" id="files-input" name="files" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please chose at least 1 file !
+                </div>
+            </div>
+            <div class="row my-3">
+                <button class="btn btn-primary my-3" id="btn-submit" type="submit">Submit files</button>
+            </div>
+
+
+        </form>
+        {%  if  report %}
+            {% for success in report["full"]["success"] %}
+                <div class="alert alert-success" role="alert">
+                    Successfully extracted and uploaded texts for file: {{ success.replace(drive_path +"\\", "") }}
+                </div>
+            {% endfor %}
+            {% for error in report["full"]["errors"] %}
+                <div class="alert alert-danger" role="alert">
+                    Error in the extracting texts for file : {{ error.replace(drive_path +"\\", "") }}. {{ report["full"]["errors"][error] }}
+                </div>
+            {% endfor %}
+            {% for error in report["chunks"]["errors"] %}
+                <div class="alert alert-danger" role="alert">
+                    Error in extracting and splitting texts for file : {{ error.replace(drive_path +"\\", "") }}. {{ report["full"]["errors"][error] }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    {% block javascript %}
+        {{ super() }}
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+                crossorigin="anonymous"></script>
+        <script
+                src="https://code.jquery.com/jquery-3.6.1.js"
+                integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+                crossorigin="anonymous"></script>
+        <script>
+            $("#btn-submit").click(function(){
+                let button = $(this)
+                button.prop("disabled", true);
+                button.html('<div class="spinner-grow spinner-grow-sm" role="status"><span class="visually-hidden">Loading...</span></div><span>Loading...</span>');
+            });
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        </script>
+    {% endblock %}
+{% endblock %}

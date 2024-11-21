@@ -1,0 +1,389 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container-fluid  my-3" style="max-width:85%">
+        <h1 class="my-4">Help & guidance page</h1>
+        <h2 id="tables-content" class="my-3">Table of content</h2>
+        <ol class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><a href="#functional-difficulty">Functional difficulty</a></div>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><a href="#review-process">Overview of the Tool Review Process</a></div>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-analyze-form">Analyze from</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-files">Files</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-directories">Directories</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-keywords">Keywords</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-submit-form">Submit form</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-matches">Matches</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-annotations">Annotations</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-comments">Comments and notes</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-finish-annotations">Finish annotations</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-generated-log">Generated log</a></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="#review-process-revision">Revision</a></div>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><a href="#general-advice">General advice for using the tool</a></div>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><a href="#final-notes">Comments and notes about a dataset</a></div>
+                </div>
+            </li>
+        </ol>
+    <h2 id="functional-difficulty" class="my-3">Functional difficulty</h2>
+    <div class="rounded border p-3">
+        <p>
+            Functional difficulty questions cover either WG-SS (Washington Group Short Set) or Other functional difficulty questions.
+            "Functional difficulty questions assess challenges individuals face in performing bodily functions or everyday activities due to disabilities,
+            such as sight, hearing, walking, thinking, self-care, and communication, collecting data to understand their impact on independence and daily life."
+        </p>
+        <p>The WGSS has questions covering six different domains as follows:</p>
+        <ul class="list-group my-3 list-group-numbered ">
+          <li class="list-group-item">Do you have difficulty seeing, even if wearing glasses?</li>
+          <li class="list-group-item">Do you have difficulty hearing, even if using a hearing aid?</li>
+          <li class="list-group-item">Do you have difficulty walking or climbing steps?</li>
+          <li class="list-group-item">Do you have difficulty remembering or concentrating?</li>
+          <li class="list-group-item">Do you have difficulty with self-care (such as washing all over or dressing)?</li>
+            <li class="list-group-item">Do you have difficulty communicating?</li>
+        </ul>
+        <p>The WGSS uses a four-level scale (no difficulty, some difficulty, a lot of difficulty, or cannot do at all).</p>
+        <p>Questions on functional difficulties in the six domains above may have different wording or different answers compared to the WG-SS. In case, they are considered as "Other functional difficulty questions".</p>
+        <p>If there are no questions on selfcare or communication, they are considered as "Other functional difficulty questions" as they would have the four core domains as per the United Nations guidelines on disability data collection for censuses.</p>
+
+    </div>
+        <h2 id="review-process" class="my-3">Overview of the Tool Review Process</h2>
+        <ol class="list-group list-group-numbered">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-analyze-form">Analyze from</div>
+                    <p class="mb-1">Go to <a href="{{ prefix }}/analyze">Analyze</a> and select the language and disabilities to search (select ‘Select all disabilities’).</p>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-files">Files</div>
+                    <p class="mb-1">Choose a file to upload from your computer and select a country to assign the files.</p>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">You can choose multiple files to review at a time by uploading your documents to a single directory (folder) and selecting all the files you want to search.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">It is best to review only 10-20 files at a time to avoid issues with the website’s performance.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">The tool supports files in the following formats: .pdf, .xlsx, .xls, .csv, .txt, and .docx.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">This tool works with OCR-compatible files. If a document is not OCR-compatible, the tool may not be able to identify relevant keywords. Users should then either make files OCR-compatible before using the tool or review the document manually.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-directories">Directories</div>
+                    <p class="mb-1" >If the country you want to assign the file is not listed yet, please tell the Fordham team. A few countries are not in the list as we have not analyzed questionnaires for them before and will add them for you.</p>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-keywords">Keywords</div>
+                    <p>In general, no change of keywords is necessary as the goal is to use a consistent set of keywords across regions for a consistent process.</p>
+                    <p>If needed, add or modify keywords to search under each functional difficulty category (i.e., seeing, hearing, walking, cognition, self-care, and communication).</p>
+                    <p>Other relevant keywords that do not fit into the six functional domains can be added to ‘Other disabilities keywords’.</p>
+                    <p class="fw-bold mb-1">Please let the Fordham team  know if you use additional or modified keywords.</p>
+
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-submit-form">Submit form</div>
+                    <p class="mb-1">Once you selected "submit form", if you get an error message you can try the following.</p>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Refresh your browser; disconnect any active VPNs; clear cache and cookies.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Some file formats may not be compatible with the tool; double check that the uploaded files are supported.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">The tool supports files in the following formats: .pdf, .xlsx, .xls, .csv, .txt, and .docx.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-matches">Matches</div>
+                    <p class="mb-1">The most relevant matches tend to be listed first when reviewing documents (i.e., keywords that fit the WG-SS or other functional difficulty questions will usually be found in the first few matches).</p>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">If a document has a large number of matches, focus on looking closely at the first 20-25 or so; if matches become less relevant as you go through them, you can skim through the last ones.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">A match can contain several types of difficulty/question. The tool allows you to mark a match with different difficulties by clicking on one or more buttons per match. This allows you to select the part of the text that corresponds to the type of difficulty.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-annotations">Annotations</div>
+                    <p class="mb-1">Record matches that have questions on the six functional domains by selecting the appropriate categories at the bottom of the page (i.e., seeing disability, hearing disability, etc.).</p>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Write or edit the text to contain only the relevant disability question and indicate what type of disability question it is:</p>
+                                <ul>
+                                    <li>
+                                        <p class="mb-1">"Functional difficulty" is used for the WG-SS or Other functional difficulty questions.</p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-1">Impairment.</p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-1">Activity of Daily Living (ADL) questions.</p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-1">Broad Activity Limitation question.</p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-1">General disability question.</p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-1">"Other disability questions" is used for all questions that do not fit into the other categories such as a question asking about  disability benefit receipt.</p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-1">If a questionnaire has functional difficulty questions in domains other than the six such as upper body functioning, anxiety, or questions on pain, click on the "Other  disability questions" button and then  select "Functional disability".</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-comments">Comments and notes</div>
+                    <p class="mb-1">Make any comments about the dataset in the "User notes" box </p>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Examples of comments you might want to make include if the dataset has questions on child disabilities.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Note that user notes are, at the moment, only able to be saved for one file.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-finish-annotations">Finish annotations</div>
+                    <p class="mb-1">When all matches are recorded or if a file has no disability questions, select the "I have finished with this file" button and fill in the information about the dataset.</p>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Make sure to fill in all relevant fields.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">When all fields are filled out, select ‘Save’ to move on to the next file; if all files have been analyzed, select ‘Generate report’ to generate the log.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-generated-log">Generated log</div>
+                    <p class="">Once the log generated, copy, paste, and save the columns for each questionnaire reviewed in the generated report into a master log, which we refer to as automated log below.</p>
+                    <p class="">This automated log is a starting point to build upon to develop your final log for your region.</p>
+                    <p class="mb-1">The final log requires the researcher to check the document manually and to make judgement calls.</p>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">It is best to review only 10-20 files at a time; this means that multiple reports will need to be generated and saved or pasted in the automated log. </p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold" id="review-process-revision">Revision</div>
+                    <p class="mb-1">Review the automated log for any errors and check the questionnaire to confirm the tool’s findings, if needed.</p>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Note that images cannot be captured by the tool. Files with embedded images would need to be made OCR compatible first or should be reviewed manually.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">The tool allows pdfs to be viewed while reviewing; these files can be read through while using the tool to confirm the tool is finding the right questions.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Since the tool does not display excel files, it may be a good idea to check Excel files manually to ensure the tool found all relevant questions.</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <p class="mb-1">Make appropriate edits to the automated log as needed.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+        </ol>
+        <h2 id="general-advice" class="my-3">General advice for using the tool</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Don’t use a VPN; this can cause the tool to crash.</li>
+            <li class="list-group-item">If you’re reviewing multiple files, save them in a single folder on your computer and name each file with the name of the country, the name of the dataset, and the year/wave of the dataset; this makes filling in information about the dataset easier.</li>
+            <li class="list-group-item">Reviewing between 10-20 files at a time seems to work best – reviewing any more files at a time can cause errors or images of pdfs may not show up.</li>
+            <li class="list-group-item">Double check the automated logs that the tool generates to make sure the questions are recorded in the places you intended them to be.</li>
+            <li class="list-group-item">If a dataset has multiple questionnaire files (for instance, separate questionnaires for the individual and household), upload all the files to the tool and review following steps 1-10; the log will generate a column in the log for each file, but since these correspond to a single dataset, they can then be consolidated into one column and added to the automated log. </li>
+        </ul>
+        <h2 id="final-notes" class="my-3">Comments and notes about a dataset</h2>
+        <div class="rounded border p-3">
+            <p>During the review process or at the end, you can include a note in the form for any comments you wish to make.</p>
+            <p>If applicable, please note if the questionnaire includes one of these question sets:</p>
+            <ol class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><a href="https://www.washingtongroup-disability.com/question-sets/wg-short-set-on-functioning-enhanced-wg-ss-enhanced/" rel="noreferrer noopener" target="_blank">WG-SS-Enhanced</a></div>
+                        <p class="">The WG-SS Enhanced is comprised of 12 questions in these eight domains of functioning: seeing, hearing, walking or climbing stairs, remembering or concentrating, self-care, communication (expressive and receptive), upper body activities, and affect (depression and anxiety). The six WG Short Set on Functioning questions are embedded in the WG-SS Enhanced.</p>
+                    </div>
+
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><a href="https://www.washingtongroup-disability.com/question-sets/wg-extended-set-on-functioning-wg-es/" rel="noreferrer noopener" target="_blank">WG-Extended Set on Functioning</a></div>
+                        <p class="">The following functional domains are included in the WG-ES: vision, hearing, mobility, cognition, self-care, communication, affect (anxiety & depression), upper body functioning, pain, fatigue. The WG-ES also includes additional on functioning with and without the use of devices/aids where applicable.</p>
+                    </div>
+
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><a href="https://www.washingtongroup-disability.com/question-sets/wg-unicef-child-functioning-module-cfm/" rel="noreferrer noopener" target="_blank">WG/UNICEF Child Functioning Module (CFM)</a></div>
+                        <p class="">The CFM assesses difficulties in the following functional domains: vision, hearing, mobility, communication/comprehension, behavior and learning (all ages); dexterity and playing (2-4 years); and self-care, remembering, focusing attention, coping with change, relationships and emotions (5-17 years)</p>
+                    </div>
+
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><a href="https://www.washingtongroup-disability.com/question-sets/wg-ilo-labor-force-survey-disability-module-lfs-dm/" rel="noreferrer noopener" target="_blank">Labor Force Survey-Disability Module (LFS-DM)</a></div>
+                        <p class="">The LFS-DM was intended for inclusion in Labor Force Surveys and is also suitable for use in population-based surveys that collect data on employment. The module includes five sections: (1) disability identification; (2) barriers; (3) accommodation; (4) attitudes; and (5) social protection.</p>
+                    </div>
+
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><a href="https://www.who.int/standards/classifications/international-classification-of-functioning-disability-and-health/who-disability-assessment-schedule" rel="noreferrer noopener" target="_blank">WHODAS 2.0</a></div>
+                       <p class="">Covers 6 Domains of Functioning, including: Cognition – understanding & communicating; Mobility– moving & getting around; Self-care– hygiene, dressing, eating & staying alone; Getting along– interacting with other people; Life activities– domestic responsibilities, leisure, work & school; Participation– joining in community activities</p>
+                    </div>
+
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Other</div>
+                        <p class="">Other question sets</p>
+                    </div>
+
+                </li>
+            </ol>
+        </div>
+</div>
+
+
+    {% block javascript %}
+        {{ super() }}
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+                crossorigin="anonymous"></script>
+        <script
+                src="https://code.jquery.com/jquery-3.6.1.js"
+                integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+                crossorigin="anonymous"></script>
+        <script>
+        </script>
+    {% endblock %}
+{% endblock %}

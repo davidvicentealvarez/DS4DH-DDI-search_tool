@@ -1,0 +1,573 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container-fluid  my-3" style="max-width:85%">
+        <h1>Find relevant questionnaires</h1>
+        <form action="{{ prefix }}/search" method="post" id="searchForm">
+            <div class="btn-group my-3" role="group" aria-label="Basic radio toggle button group">
+
+                <input type="radio" class="btn-check language-radio" name="language"
+                       value="/static/media/terms_eng.json" id="language2" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="language2">English</label>
+
+                <input type="radio" class="btn-check language-radio" name="language"
+                       value="/static/media/terms_fra.json" id="language3" autocomplete="off">
+                <label class="btn btn-outline-primary" for="language3">French</label>
+
+                <input type="radio" class="btn-check language-radio" name="language"
+                       value="/static/media/terms_deu.json" id="language1" autocomplete="off">
+                <label class="btn btn-outline-primary" for="language1">German</label>
+
+                <input type="radio" class="btn-check language-radio" name="language"
+                       value="/static/media/terms_ita.json" id="language4" autocomplete="off">
+                <label class="btn btn-outline-primary" for="language4">Italian</label>
+
+                <input type="radio" class="btn-check language-radio" name="language"
+                       value="/static/media/terms_por.json" id="language5" autocomplete="off">
+                <label class="btn btn-outline-primary" for="language5">Portuguese</label>
+
+                <input type="radio" class="btn-check language-radio" name="language"
+                       value="/static/media/terms_spa.json" id="language6" autocomplete="off">
+                <label class="btn btn-outline-primary" for="language6">Spanish</label>
+            </div>
+            <div class="row">
+                <div class="col-11">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="size" placeholder="number" value="10" name="size">
+                        <label for="size">Number of results</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary my-3" id="searchsubmit" disabled>Search</button>
+                </div>
+            </div>
+
+            <fieldset class="row mb-3 align-items-center">
+                <legend class="col-form-label col-sm pt-0">Washington Group Short Set questions
+                </legend>
+                <div class="col-sm-10 ">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input strict-search" id="strict-search" type="checkbox" role="switch">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="row mt-3 ">
+                <legend class="col-form-label col-sm pt-0">Search operator between disabilities</legend>
+                <div class="col-sm-10 ">
+                    <div class="form-check form-check-inline mb-3">
+                        <input class="form-check-input search-operator" type="radio" id="operatoreRadio1"
+                               name="operator"
+                               value="AND" checked>
+                        <label class="form-check-label" for="operatoreRadio1">AND</label>
+                    </div>
+
+                    <div class="form-check form-check-inline mb-2">
+                        <input class="form-check-input search-operator" type="radio" id="operatoreRadio2"
+                               name="operator"
+                               value="OR">
+                        <label class="form-check-label" for="operatoreRadio2">OR</label>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="row mb-3 align-items-center">
+                <legend class="col-form-label col-sm pt-0">Search disabilities</legend>
+                <div class="col-sm-10">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input disability-checkbox" type="checkbox" value="seeing"
+                               id="seeingcheckbox">
+                        <label class="form-check-label" for="seeingcheckbox">Seeing</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input disability-checkbox" type="checkbox" value="hearing"
+                               id="hearingcheckbox">
+                        <label class="form-check-label" for="hearingcheckbox">Hearing</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input disability-checkbox" type="checkbox" value="walking"
+                               id="walkingcheckbox">
+                        <label class="form-check-label" for="walkingcheckbox">Walking</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input disability-checkbox" type="checkbox" value="cognition"
+                               id="cognitioncheckbox">
+                        <label class="form-check-label" for="cognitioncheckbox">Cognition</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input disability-checkbox" type="checkbox" value="self-care"
+                               id="self-carecheckbox">
+                        <label class="form-check-label" for="self-carecheckbox">Self-care</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input disability-checkbox" type="checkbox" value="communication"
+                               id="communicationcheckbox">
+                        <label class="form-check-label" for="communicationcheckbox">Communication</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input disability-checkbox" type="checkbox" value="other"
+                               id="othercheckbox">
+                        <label class="form-check-label" for="othercheckbox">Other disabilities</label>
+                    </div>
+                    <input type="checkbox" class="btn-check" id="btn-all" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btn-all" id="label-btn-all">Select all</label>
+                </div>
+            </fieldset>
+
+            <div class="input-group my-4 visually-hidden">
+                <span class="input-group-text">Query preview</span>
+                <textarea class="form-control" aria-label="Preview of the query" name="query" id="textpreview"
+                          style="height: 300px;"></textarea>
+            </div>
+        </form>
+        <h2 class="my-3">Keywords</h2>
+        <p>Add, modify, or delete the terms below to customize your search query within questionnaires</p>
+        <div class="row justify-content-center text-break mt-3">
+            <div class="col border search-items-ui search-items-seeing visually-hidden">
+                <table id="seeing-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Seeing</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-hearing visually-hidden">
+                <table id="hearing-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Hearing</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-walking visually-hidden">
+                <table id="walking-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Walking</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-cognition visually-hidden">
+                <table id="cognition-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Cognition</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col border search-items-ui search-items-self-care visually-hidden">
+                <table id="self-care-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Self-care</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-communication visually-hidden">
+                <table id="communication-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Communication</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border search-items-ui search-items-other visually-hidden">
+                <table id="other-table">
+                    <thead class="border-bottom">
+                    <tr>
+                        <th>Other disabilities</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row justify-content-center text-break">
+            <div class="col add-table visually-hidden add-table-seeing">
+                <button type="button" class="btn btn-secondary my-2" id="btn-seeing-table">add
+                    item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-hearing">
+                <button type="button" class="btn btn-secondary my-2" id="btn-hearing-table">
+                    add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-walking">
+                <button type="button" class="btn btn-secondary my-2" id="btn-walking-table">
+                    add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-cognition">
+                <button type="button" class="btn btn-secondary my-2" id="btn-cognition-table">
+                    add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-self-care">
+                <button type="button" class="btn btn-secondary my-2" id="btn-self-care-table">
+                    add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-communication">
+                <button type="button" class="btn btn-secondary my-2"
+                        id="btn-communication-table">add item
+                </button>
+            </div>
+            <div class="col add-table visually-hidden add-table-other">
+                <button type="button" class="btn btn-secondary my-2"
+                        id="btn-other-table">add item
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {% block javascript %}
+        {{ super() }}
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+                crossorigin="anonymous"></script>
+        <script
+                src="https://code.jquery.com/jquery-3.6.1.js"
+                integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+                crossorigin="anonymous"></script>
+        <script src="{{ prefix }}/static/media/bootstable.js"></script>
+        <script>
+
+            // MODEL
+            let json_file = '{{ prefix }}/static/media/terms_eng.json';
+            let strictWGSearch = false;
+            let searchoperator = "AND";
+            let search_fields = []
+
+            $("#seeing-table").SetEditable()
+            $('#btn-seeing-table').click(function () {
+                rowAddNewAndEdit('seeing-table', ["new item"], ["search-keyword seeing-table-item"]);
+            });
+            $("#hearing-table").SetEditable()
+            $('#btn-hearing-table').click(function () {
+                rowAddNewAndEdit('hearing-table', ["new item"], ["search-keyword hearing-table-item"]);
+            });
+            $("#walking-table").SetEditable()
+            $('#btn-walking-table').click(function () {
+                rowAddNewAndEdit('walking-table', ["new item"], ["search-keyword walking-table-item"]);
+            });
+            $("#cognition-table").SetEditable()
+            $('#btn-cognition-table').click(function () {
+                rowAddNewAndEdit('cognition-table', ["new item"], ["search-keyword cognition-table-item"]);
+            });
+            $("#self-care-table").SetEditable()
+            $('#btn-self-care-table').click(function () {
+                rowAddNewAndEdit('self-care-table', ["new item"], ["search-keyword self-care-table-item"]);
+            });
+            $("#communication-table").SetEditable()
+            $('#btn-communication-table').click(function () {
+                rowAddNewAndEdit('communication-table', ["new item"], ["search-keyword communication-table-item"]);
+            });
+
+            $("#other-table").SetEditable()
+            $('#btn-other-table').click(function () {
+                rowAddNewAndEdit('other-table', ["new item"], ["search-keyword other-table-item"]);
+            });
+
+            // Language radio event listener
+            const lan_radios = document.querySelectorAll(".language-radio")
+            Array.from(lan_radios).forEach(rad => {
+                rad.addEventListener("change", function () {
+                    if (this.checked) {
+                        json_file = "{{ prefix }}" + this.value;
+                    }
+                    update_query_preview_v2();
+                });
+            });
+
+
+            // Strict WG guestion event listener
+            const wgSwitches = document.querySelectorAll(".strict-search")
+            Array.from(wgSwitches).forEach(swch => {
+                swch.addEventListener("change", function () {
+                    strictWGSearch = this.checked;
+                    update_query_preview_v2();
+
+                });
+            });
+
+
+            // search operators radio event listener
+            const operatorRadio = document.querySelectorAll(".search-operator")
+            Array.from(operatorRadio).forEach(rad => {
+                rad.addEventListener("change", function () {
+                    searchoperator = this.value;
+                    update_query_preview_v2();
+                });
+            });
+
+            function updateDisabilityList(checkbox) {
+                if (checkbox.checked) {
+                    search_fields.push(checkbox.value)
+                } else {
+                    search_fields = search_fields.filter(e => e !== checkbox.value)
+                }
+            }
+
+            // disabilities checkboxes event listener
+            const disabilityCheckboxes = document.querySelectorAll(".disability-checkbox")
+            Array.from(disabilityCheckboxes).forEach(checkbox => {
+                checkbox.addEventListener("change", function () {
+                    updateDisabilityList(this);
+                    update_query_preview_v2();
+                });
+            });
+
+            // select-unselect button event listener
+            const btnAll = document.querySelector("#btn-all")
+            btnAll.addEventListener("click", function () {
+                label = document.querySelector("#label-btn-all");
+                if (this.checked) {
+                    label.innerHTML = "Unselect all"
+                } else {
+                    label.innerHTML = "Select all"
+                }
+                search_fields = []
+                Array.from(disabilityCheckboxes).forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                    checkbox.ariaChecked = this.ariaChecked;
+                    updateDisabilityList(checkbox);
+                });
+                update_query_preview_v2();
+            });
+
+            // update query function
+            async function update_query_preview() {
+                const searchItems = await fetch(json_file).then((response) => response.json());
+                const textarea = document.querySelector("#textpreview");
+                let field = strictWGSearch ? "strict" : "fuzzy";
+                if (searchoperator === "AND") {
+                    Object.keys(searchItems[field]).forEach(search_field => {
+                        if (!search_fields.includes(search_field)) {
+                            delete searchItems[field][search_field];
+                        }
+                    });
+                    textarea.value = JSON.stringify(searchItems[field], null, 3)
+                } else if (searchoperator === "OR") {
+                    let any = {"any": []}
+                    for (const i in search_fields) {
+                        for (const j in searchItems[field][search_fields[i]]) {
+                            any.any.push(searchItems[field][search_fields[i]][j])
+                        }
+                    }
+
+                }
+            }
+
+            function hide_unselected_disabilities() {
+                 $(".search-items-ui").addClass("visually-hidden")
+                 $(".add-table").addClass("visually-hidden")
+                 for (const i in search_fields) {
+                     $(".search-items-"+ search_fields[i]).removeClass("visually-hidden")
+                     $(".add-table-"+ search_fields[i]).removeClass("visually-hidden")
+                 }
+
+                {#$(".add-table").each(function () {#}
+                {#    let btn_name = this.id.replace("btn-", "").replace("-table", "")#}
+                {#    //console.log(btn_name)#}
+                {#    if (search_fields.includes(btn_name)) {#}
+                {#        $(this).removeClass("visually-hidden")#}
+                {#    } else {#}
+                {#        $(this).addClass("visually-hidden")#}
+                {#    }#}
+            }
+
+            // update function V2
+            async function update_query_preview_v2() {
+                const searchItems = await fetch(json_file).then((response) => response.json());
+                let field = strictWGSearch ? "strict" : "fuzzy";
+                $("#seeing-table > tbody > tr").empty()
+                $("#hearing-table > tbody > tr").empty()
+                $("#walking-table > tbody > tr").empty()
+                $("#cognition-table > tbody > tr").empty()
+                $("#self-care-table > tbody > tr").empty()
+                $("#communication-table > tbody > tr").empty()
+                $("#other-table > tbody > tr").empty()
+                $("#searchsubmit").attr("disabled", search_fields.length === 0)
+                for (const i in search_fields) {
+                    let tableId = search_fields[i] + "-table"
+                    for (const j in searchItems[field][search_fields[i]]) {
+                        rowAddNew(tableId, [searchItems[field][search_fields[i]][j]], ["search-keyword " + tableId + "-item"])
+                    }
+                }
+                hide_unselected_disabilities();
+                //console.log(build_query_json())
+
+            }
+
+            function get_keywords(query) {
+                let keywordList = []
+                for (const key in query) {
+                    keywordList.push(...query[key])
+                }
+
+                return keywordList
+
+            }
+
+            function build_query_json() {
+                if (searchoperator === "AND") {
+                    let seeingKeywords = $(".seeing-table-item").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    let hearingKeywords = $(".hearing-table-item").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    let walkingKeywords = $(".walking-table-item").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    let cognitionKeywords = $(".cognition-table-item").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    let selfCareKeywords = $(".self-care-table-item").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    let communicationKeywords = $(".communication-table-item").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    let otherKeywords = $(".other-table-item").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    return {
+                        "seeing": seeingKeywords,
+                        "hearing": hearingKeywords,
+                        "walking": walkingKeywords,
+                        "cognition": cognitionKeywords,
+                        "self-care": selfCareKeywords,
+                        "communication": communicationKeywords,
+                        "other" : otherKeywords
+                    }
+                } else {
+                    let allKeywords = $(".search-keyword").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                    return {"any": allKeywords}
+                }
+            }
+
+
+            // submit query
+            document.querySelector("#searchsubmit").addEventListener("click", function () {
+                let form = document.querySelector("#searchForm")
+                try {
+                    //let query = JSON.parse(document.querySelector("#textpreview").value);
+                    let query = build_query_json()
+                    const textarea = document.querySelector("#textpreview");
+                    textarea.value = JSON.stringify(query, null, 3)
+                    localStorage.setItem("keywords", JSON.stringify(get_keywords(query)))
+                    localStorage.setItem("query", JSON.stringify(query))
+                    localStorage.setItem("size", $("#size").val())
+                    saveForm();
+                    form.submit();
+                } catch (e) {
+                    window.alert("could not parse the query as JSON");
+                    console.log(e)
+                }
+            });
+
+            document.querySelector("#searchForm").addEventListener("submit", function (event) {
+                event.preventDefault()
+                event.stopPropagation()
+            });
+
+
+            function saveForm() {
+                let seeingKeywords = $(".seeing-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let hearingKeywords = $(".hearing-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let walkingKeywords = $(".walking-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let cognitionKeywords = $(".cognition-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let selfCareKeywords = $(".self-care-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let communicationKeywords = $(".communication-table-item").map(function () {
+                    return this.innerHTML;
+                }).get();
+                let otherKeywords = $(".other-table-item").map(function () {
+                        return this.innerHTML;
+                    }).get();
+                let keywords =  {
+                    "seeing": seeingKeywords,
+                    "hearing": hearingKeywords,
+                    "walking": walkingKeywords,
+                    "cognition": cognitionKeywords,
+                    "self-care": selfCareKeywords,
+                    "communication": communicationKeywords,
+                    "other" : otherKeywords
+                }
+                let size = $("#size").val();
+                let operator = $('input[name="operator"]:checked').prop("id");
+                let language = $('input[name="language"]:checked').prop("id");
+                let strict = $('#strict-search').is(":checked")
+                let checkboxes = $(".disability-checkbox:checked").map(function() { return this.id; }).get();
+                localStorage.setItem("form", JSON.stringify({"keywords":keywords, "checkboxes":checkboxes,
+                    "language":language, "size":size, "operator": operator, "strict": strict}));
+            }
+
+            function reloadFormFromSave(){
+                let save = localStorage.getItem("form");
+                if(save != null){
+                    save = JSON.parse(save)
+                    json_file = "{{ prefix }}" + $("#" + save["language"]).attr("checked", true).val()
+                    for(const checkID of save["checkboxes"]){
+                        $("#" + checkID).attr("checked", true);
+                        search_fields.push( $("#" + checkID).val());
+                    }
+                    if ("size" in save){
+                        $("#size").val(save["size"])
+                    }
+                    if("operator" in save){
+                        searchoperator = $("#" + save["operator"]).attr("checked", true).val()
+                    }
+                    if ("strict" in save){
+                        strictWGSearch = save["strict"]
+                        $("#strict-search").attr("checked", save["strict"])
+                    }
+
+                }
+                for (const i in search_fields) {
+                    let tableId = search_fields[i] + "-table"
+                    for (const j in save["keywords"][search_fields[i]]) {
+                        rowAddNew(tableId, [save["keywords"][search_fields[i]][j]], ["search-keyword " + tableId + "-item"])
+                    }
+                }
+                hide_unselected_disabilities();
+            }
+
+            reloadFormFromSave();
+            $("#searchsubmit").attr("disabled", search_fields.length === 0)
+
+        </script>
+    {% endblock %}
+{% endblock %}

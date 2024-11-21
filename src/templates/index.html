@@ -1,0 +1,95 @@
+<!-- Here we use bootstrap extension for our navigation Bar -->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ prefix }}/favicon.ico">
+    {% block title %} {% endblock %}
+    {% block style %}
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+              crossorigin="anonymous">
+
+    {% endblock %}
+    <!-- Bootstrap CSS -->
+    <title>QR-DDR</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
+        <div class="container-fluid py-0">
+            <a class="navbar-brand py-0" href="{{ prefix }}/">
+                <img src='{{ prefix }}/static/media/DDI_icon_removebg.png' alt="Disability Data Initiative Nav logo" width="75" height="75"
+                     class="d-inline-block align-text-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link {% if page and page == "Home" %}active{% endif %}"
+                       {% if page and page == "Home" %}aria-current="page"{% endif %} href="{{ prefix }}/">Home</a>
+                    <a class="nav-link {% if page and page == "Search" %}active{% endif %}"
+                       {% if page and page == "Search" %}aria-current="page"{% endif %} href="{{ prefix }}/search">Search</a>
+                    <a class="nav-link {% if page and page == "Analyze" %}active{% endif %}"
+                       {% if page and page == "Analyze" %}aria-current="page"{% endif %} href="{{ prefix }}/analyze">Analyze</a>
+                    <a class="nav-link {% if page and page == "Upload" %}active{% endif %}"
+                       {% if page and page == "Upload" %}aria-current="page"{% endif %} href="{{ prefix }}/upload">Upload</a>
+                    <a class="nav-link {% if page and page == "Help" %}active{% endif %}"
+                       {% if page and page == "Help" %}aria-current="page"{% endif %} href="{{ prefix }}/help">Help</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block content %}
+    {% block javascript %}{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+{% endblock %}
+
+<div class="container-fluid  mt-auto" style="max-width:85%">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center p-3 border-top bg-light">
+        <p class="col-sm-1 mb-0 text-muted"></p>
+
+
+        <div class="">
+            <div class= "d-col-md-10 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto text-decoration-none ">
+                <a href="https://www.hes-so.ch/en/homepage" class="mx-1" rel="noreferrer noopener" target="_blank">
+                    <img src="{{ prefix }}/static/media/HES_SO_Logo_RGB_page.webp" alt="Hautes écoles de Suisse occidentale" width="150" height="50">
+                </a>
+{#                <a href="https://www.hesge.ch/heds/" class="mx-1" rel="noreferrer noopener" target="_blank">#}
+{#                    <img src="{{ prefix }}/static/media/heds-ge_01.webp" alt="Haute école de santé Genève" width="128" height="50">#}
+{#                </a>#}
+                <a href="https://www.unige.ch/medecine/en/" class="mx-1" rel="noreferrer noopener" target="_blank">
+                    <img src="{{ prefix }}/static/media/UNIGE.gif" alt="Geneva University logo" width="138" height="50">
+                </a>
+                <a href="https://www.unige.ch/medecine/radio/en/research-groups/1035teodoro" class="mx-2 mt-1" rel="noreferrer noopener" target="_blank">
+                    <img src="{{ prefix }}/static/media/DS4DH_removebg.png" alt="Research group logo" width="212" height="50">
+                </a>
+                <a href="https://www.fordham.edu/" class="mx-2" rel="noreferrer noopener" target="_blank">
+                    <img src="{{ prefix }}/static/media/Fordham-University.svg" alt="Fordham University" width="187" height="50">
+                </a>
+                <a href="https://disabilitydata.ace.fordham.edu/" class="mx-2" rel="noreferrer noopener" target="_blank">
+                    <img src="{{ prefix }}/static/media/DDI_removebg.png" alt=" Disability Data Initiative (DDI) logo" width="176" height="50">
+                </a>
+            </div>
+
+        </div>
+        <ul class="nav col-md-1 justify-content-end">
+{#            <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>#}
+            {#            <li class="nav-item"><a href="/search-multi" class="nav-link px-2 text-muted">Find relevant documents</a></li>#}
+            <li class="nav-item"><a href="https://www.unige.ch/medecine/radio/en/research-groups/1035teodoro" class="nav-link px-2 text-muted" rel="noreferrer noopener" target="_blank">Contact</a></li>
+            {#            <li class="nav-item"><a href="/upload" class="nav-link px-2 text-muted">upload files</a></li>#}
+{#            <li class="nav-item"><a href="/help" class="nav-link px-2 text-muted">Help</a></li>#}
+        </ul>
+    </footer>
+</div>
+</body>
+</html>

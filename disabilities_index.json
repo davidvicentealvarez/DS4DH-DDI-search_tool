@@ -1,0 +1,106 @@
+{
+    "mappings": {
+        "properties": {
+            "country": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                    }
+                }
+            },
+            "filename": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                    }
+                }
+            },
+            "filepath": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                    }
+                }
+            },
+            "filetype": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                    }
+                }
+            },
+            "meta": {
+                "type": "object"
+            },
+            "text_blob": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
+                    }
+                }
+            }
+        }
+    },
+    "settings": {
+        "index": {
+            "routing": {
+                "allocation": {
+                    "include": {
+                        "_tier_preference": "data_content"
+                    }
+                }
+            },
+            "similarity": {
+                "default": {
+                    "type": "BM25",
+                    "b": "0.5",
+                    "k1": "103"
+                }
+            },
+            "analysis": {
+                "filter": {
+                    "english_stop": {
+                        "type": "stop",
+                        "stopwords": "_english_"
+                    },
+                    "length_2_char": {
+                        "type": "length",
+                        "min": "2"
+                    },
+                    "stemmer_english": {
+                        "type": "stemmer",
+                        "language": "porter2"
+                    }
+                },
+                "analyzer": {
+                    "default": {
+                        "filter": [
+                            "lowercase",
+                            "asciifolding",
+                            "english_stop",
+                            "stemmer_english",
+                            "length_2_char"
+                        ],
+                        "tokenizer": "my_tokenizer"
+                    }
+                },
+                "tokenizer": {
+                    "my_tokenizer": {
+                        "pattern": "[^\\w_-]+",
+                        "type": "pattern"
+                    }
+                }
+            }
+        }
+    }
+}
