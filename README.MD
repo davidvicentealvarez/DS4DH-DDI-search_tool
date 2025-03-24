@@ -38,12 +38,12 @@
    - Create the 2 indexes used by the tool by executing the following 2 commands :
 
       ```bash
-      curl -k -u user:password -X PUT "http://localhost:9800/disabilities_clean" -d @disabilities_index.json --header "Content-Type: application/json"
+      curl -k -u <user>:<password> -X PUT "http://localhost:9800/disabilities_clean" -d @disabilities_index.json --header "Content-Type: application/json"
       ```
       This create the full text index
 
       ```bash
-      curl -k -u user:password -X PUT "http://localhost:9800/disabilities_chunks_clean" -d @disabilities_chunk_index.json --header "Content-Type: application/json"
+      curl -k -u <user>:<password> -X PUT "http://localhost:9800/disabilities_chunks_clean" -d @disabilities_chunk_index.json --header "Content-Type: application/json"
       ```
    - Close the terminal and stop the elasticsearch database. The configurations is complete. You can proceed to step 3.
 
