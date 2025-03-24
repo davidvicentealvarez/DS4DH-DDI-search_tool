@@ -29,7 +29,7 @@
          ```bash
          ./elasticsearch-8.x.x/bin/elasticsearch
          ```
-   - Follow the instructions, it will ask you to create a password and username. Save the password, username and the signature. You will need it later
+   - Follow the instructions, it will create for you a password and username. Save the password, username and the signature, you will need it later.
    - Change the configuration of ElasticSearch. To do this, copy the file located at `elasticsearch.yml` into the config directory of the installation of ElasticSearch in `elasticsearch-8.x.x/config`
    - Copy the newly certificates created by ElasticSearch from `elasticsearch-8.x.x/config/certs` into `src/certs`
    - Update the variables "ES_PWD" and "ES_USER" in `src/settings.py` with the newly created password and usernames from ElasticSearch
@@ -38,13 +38,14 @@
    - Create the 2 indexes used by the tool by executing the following 2 commands :
 
       ```bash
-      curl -X PUT "http://localhost:9800/disabilities_clean" -d @disabilities_index.json --header "Content-Type: application/json"
+      curl -k -u user:password -X PUT "http://localhost:9800/disabilities_clean" -d @disabilities_index.json --header "Content-Type: application/json"
       ```
       This create the full text index
 
       ```bash
-      curl -X PUT "http://localhost:9800/disabilities_chunks_clean" -d @disabilities_chunk_index.json --header "Content-Type: application/json"
+      curl -k -u user:password -X PUT "http://localhost:9800/disabilities_chunks_clean" -d @disabilities_chunk_index.json --header "Content-Type: application/json"
       ```
+   - Close the terminal and stop the database. The configurations is complete. You can proceed to step 3.
 
 
 3. **Build the Docker Image**: 
