@@ -50,7 +50,7 @@
 
 3. **Build the Docker Image**: 
 
-   Run the following command in tne same console to build the Docker image without using cached layers:  
+   Run the following command in the console (where the docker-compose.yml is located) to build the Docker image without using cached layers:  
    ```bash
    docker compose build --no-cache
    ```
